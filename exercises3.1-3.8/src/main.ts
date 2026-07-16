@@ -1,9 +1,12 @@
 
 import express from 'express'
 import { Person, state } from './state.js'
+import morgan from 'morgan'
+
 
 const app = express()
 app.use(express.json())
+app.use(morgan('tiny', {stream: process.stdout}))
 
 app.get('/api/persons', (req, res) => {
     res.json(state.persons)
