@@ -3,6 +3,7 @@ import express from 'express'
 import { state } from './state.js'
 
 const app = express()
+app.use(express.json())
 
 app.get('/api/persons', (req, res) => {
     res.json(state.persons)
@@ -20,6 +21,15 @@ app.delete('/api/persons/:id', (req, res)=> {
     state.persons = state.persons.filter(item=> item.id !== req.params.id)
 
     res.status(204).end()
+})
+
+app.post('/api/persons', (req, res)=> {
+    const body= req.body
+
+    const newPerson = {...body, id: state.generateId()}
+    state.persons.push(newPerson)
+    res.status(201).json(newPerson)
+
 })
 
 app.get('/info', (req, res)=> {
