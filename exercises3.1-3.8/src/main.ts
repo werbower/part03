@@ -16,10 +16,18 @@ app.get('/api/persons/:id', (req, res)=> {
     res.send(person)
 })
 
+app.delete('/api/persons/:id', (req, res)=> {
+    state.persons = state.persons.filter(item=> item.id !== req.params.id)
+
+    res.status(204).end()
+})
+
 app.get('/info', (req, res)=> {
     res.send(`<div>Phone book has info for ${state.persons.length} people</div><br>
         <div>${(new Date()).toString()}</div>`)
 })
+
+
 
 
 
