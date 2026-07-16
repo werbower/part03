@@ -1,6 +1,6 @@
 
 import express from 'express'
-import { state } from './state.js'
+import { Person, state } from './state.js'
 
 const app = express()
 app.use(express.json())
@@ -24,9 +24,18 @@ app.delete('/api/persons/:id', (req, res)=> {
 })
 
 app.post('/api/persons', (req, res)=> {
-    const body= req.body
+    const body: Partial<Person>= req.body
 
-    const newPerson = {...body, id: state.generateId()}
+    if (!body.name)
+        return res.status(422).json({message: 'name is required'})
+    if (!body.number)
+        return res.status(422).json({message: 'number is required'})
+    if (!!state.persons.find(item=> item.name === body.name))
+        return res.status(422).json({message: 'name must be unique'})
+    if (!!state.persons.find(item=> item.number === body.number))
+        return res.status(422).json({message: 'number must be unique'})
+
+    const newPerson = {...body, id: state.generateId()} as Person
     state.persons.push(newPerson)
     res.status(201).json(newPerson)
 
