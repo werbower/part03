@@ -6,7 +6,18 @@ import morgan from 'morgan'
 
 const app = express()
 app.use(express.json())
-app.use(morgan('tiny', {stream: process.stdout}))
+app.use(morgan(function (tokens, req, res) {
+  const allTokens =  [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ]
+  if (req.method === 'POST') allTokens.push(JSON.stringify(req.body))
+  return allTokens.join(' ')}, {stream: process.stdout}))
+
+  
 
 app.get('/api/persons', (req, res) => {
     res.json(state.persons)
