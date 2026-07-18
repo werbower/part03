@@ -64,5 +64,5 @@ app.get('/info', (req, res)=> {
 
 
 
-const port = 3001
+const port = process.env.PORT || 3001
 app.listen(port, ()=> console.log(`app listening on port ${port}`))

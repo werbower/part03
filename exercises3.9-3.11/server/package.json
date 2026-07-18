@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
-    "prod": "node dist/main.js",
-    "start": "pnpm build && pnpm prod"
+    "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "",
