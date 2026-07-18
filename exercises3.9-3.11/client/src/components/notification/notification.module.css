@@ -1,0 +1,14 @@
+.notification {
+    --bordercolor: green;
+
+    padding: 10px;
+    background-color: lightgrey;
+    border: 2px solid var(--bordercolor);
+    border-radius: 5px;
+    font-size: 20px;
+    margin-bottom: 10px;
+
+    &.failure {
+        --bordercolor: red;
+    }
+}
