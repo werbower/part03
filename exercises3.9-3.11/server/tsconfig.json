@@ -16,5 +16,5 @@
     // and npm install -D @types/node
   },
   "include": ["src"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "client", "node_modules"]
 }

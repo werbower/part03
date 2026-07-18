@@ -2,9 +2,15 @@
 import express from 'express'
 import { Person, state } from './state.js'
 import morgan from 'morgan'
+import { join } from 'path'
 
 
 const app = express()
+
+const clientPath = join(import.meta.dirname, '../client')
+console.log('client path', clientPath)
+app.use(express.static(clientPath))
+
 app.use(express.json())
 app.use(morgan(function (tokens, req, res) {
   const allTokens =  [

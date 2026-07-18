@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"cd ./server && pnpm dev\" \"cd ./client && pnpm dev\" ",
-    "build": "pnpm i && cd ./server && pnpm i && pnpm build",
+    "build": "concurrently \"pnpm i && cd ./server && pnpm i && pnpm build\" \"cd ./client && pnpm i && pnpm build\" ",
     "start": "cd ./server && pnpm start"
   },
   "keywords": [],
