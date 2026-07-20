@@ -1,11 +1,9 @@
 
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import { Person, state } from './state.js'
 import morgan from 'morgan'
 import { join } from 'path'
 import { mongoService } from './mongo.js'
-
-
 
 const app = express()
 
@@ -28,10 +26,10 @@ app.use(morgan(function (tokens, req, res) {
 
 
 
-app.get('/api/persons', (req, res) => {
+app.get('/api/persons', (req, res, next) => {
     mongoService.getAllPersons().then(persons => {
         res.json(persons)
-    })
+    }).catch(e => next(e))
 })
 
 app.get('/api/persons/:id', (req, res) => {
@@ -42,18 +40,18 @@ app.get('/api/persons/:id', (req, res) => {
     res.send(person)
 })
 
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
     const id = req.params.id
     mongoService.deletePerson(id).then((result) => {
         if (!result) return res.status(404).end()
-            
-        res.status(204).end()
-    })
 
-    
+        res.status(204).end()
+    }).catch(e => next(e))
+
+
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const body: Partial<Person> = req.body
 
     if (!body.name)
@@ -67,16 +65,15 @@ app.post('/api/persons', (req, res) => {
 
     mongoService.postNewPerson(body as Person).then(result => {
         res.status(201).json(result as Person)
-    })
-
-    
+    }).catch(e => next(e))
 
 })
 
-app.get('/info', (req, res) => {
-    res.send(`<div>Phone book has info for ${state.persons.length} people</div><br>
-        <div>${(new Date()).toString()}</div>`)
-})
+
+const errHandler: ErrorRequestHandler = (err, req, res, next) => {
+    res.status(500).end()
+}
+app.use(errHandler)
 
 
 
