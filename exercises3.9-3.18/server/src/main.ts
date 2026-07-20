@@ -3,6 +3,7 @@ import express from 'express'
 import { Person, state } from './state.js'
 import morgan from 'morgan'
 import { join } from 'path'
+import { mongoService } from './mongo.js'
 
 
 
@@ -28,7 +29,9 @@ app.use(morgan(function (tokens, req, res) {
 
 
 app.get('/api/persons', (req, res) => {
-    res.json(state.persons)
+    mongoService.getAllPersons().then(persons => {
+        res.json(persons)
+    })
 })
 
 app.get('/api/persons/:id', (req, res) => {
