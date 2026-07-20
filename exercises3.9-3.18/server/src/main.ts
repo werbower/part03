@@ -58,19 +58,36 @@ app.post('/api/persons', (req, res, next) => {
         return res.status(422).json({ message: 'name is required' })
     if (!body.number)
         return res.status(422).json({ message: 'number is required' })
-    // if (!!state.persons.find(item => item.name === body.name))
-    //     return res.status(422).json({ message: 'name must be unique' })
-    // if (!!state.persons.find(item => item.number === body.number))
-    //     return res.status(422).json({ message: 'number must be unique' })
 
     mongoService.postNewPerson(body as Person).then(result => {
         res.status(201).json(result as Person)
-    }).catch(e => next(e))
+    }).catch(e => {
+        if (e.code == 11000) {
+            return res.status(422).json({ message: `can't process payload` })
+        }
+        next(e)
+    })
+
+})
+
+app.put('/api/persons/:id', (req, res, next) => {
+    const id = req.params.id
+    const body: Partial<Person> = req.body
+
+    mongoService.putPerson(id, body as Person).then(result => {
+        if (!result) return res.status(404).end()
+        res.status(200).json(result as Person)
+    }).catch(e => {
+        next(e)
+    })
 
 })
 
 
 const errHandler: ErrorRequestHandler = (err, req, res, next) => {
+    console.log('error ', err)
+    console.log('error ', JSON.stringify(err))
+
     res.status(500).end()
 }
 app.use(errHandler)

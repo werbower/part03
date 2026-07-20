@@ -11,8 +11,8 @@ mongoose.connect(connString, { family: 4 })
 type TPerson = { _id?: string, name: string, number: string }
 
 const person = new mongoose.Schema<TPerson>({
-    name: String,
-    number: String
+    name: {type: String, required: true, unique: true},
+    number: {type: String, required: true, unique: true}
 })
 const Person = mongoose.model<TPerson>('Person', person)
 
@@ -23,10 +23,15 @@ export const mongoService = {
     postNewPerson: (item: TPerson) => {
         const newPerson = new Person(item)
         return newPerson.save()
-            .then(result => {
-                console.log('created ', result)
-                return result
-            })
+            
+    },
+    putPerson: async (id: string, item: TPerson) => {
+        const putPerson = await Person.findById(id)
+        if (!putPerson) return putPerson
+        if (Object.hasOwn(item, 'name')) putPerson.name = item.name
+        if (Object.hasOwn(item, 'number')) putPerson.number = item.number
+        return putPerson.save()
+            
     },
     deletePerson: (id: string)=> {
         return Person.findByIdAndDelete(id)

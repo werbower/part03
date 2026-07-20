@@ -8,7 +8,7 @@ export const apiService = {
     get: ()=> axios.get(baseUrl).then(response => 
         response.data.map((item: ApiPerson )=> mapApiPerson(item)) as Person[]),
 
-    put: (person: Person)=> axios.put(`${baseUrl}/${person.id}`, person).then(response => response.data as Person),
+    put: (person: Person)=> axios.put(`${baseUrl}/${person.id}`, person).then(response => mapApiPerson(response.data) as Person),
 
     post: (person: Omit<Person, 'id'>)=> axios.post(baseUrl, person).then(response => mapApiPerson(response.data as ApiPerson) as Person),
 
