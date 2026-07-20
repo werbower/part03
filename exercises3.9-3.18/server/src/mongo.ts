@@ -27,6 +27,13 @@ export const mongoService = {
                 console.log('created ', result)
                 return result
             })
+    },
+    deletePerson: (id: string)=> {
+        return Person.findByIdAndDelete(id)
+        .then(result => {
+            console.log('deleted ', result)
+            return result
+        })
     }
 
 

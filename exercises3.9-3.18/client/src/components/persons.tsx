@@ -1,6 +1,6 @@
 import type { Person } from "../App";
 
-type PersonsProps = {filteredPersons: Person[], handlePersonDelete: (id: number|string)=> void}
+type PersonsProps = {filteredPersons: Person[], handlePersonDelete: (id: string)=> void}
 
 export default function Persons({filteredPersons, handlePersonDelete}: PersonsProps) {
     return (<>

@@ -6,7 +6,7 @@ import { apiService } from "./api-service"
 import type { NotificationBody } from "./components/notification/notification"
 import Notification from "./components/notification/notification"
 
-export type Person = { name: string, number: string, id: number | string }
+export type Person = { name: string, number: string, id: string }
 
 function App() {
   const [persons, setPersons] = useState<Person[]>([])
@@ -64,7 +64,7 @@ function App() {
     }
   }
 
-  const handlePersonDelete = (id: number | string) => {
+  const handlePersonDelete = (id:  string) => {
     const found = persons.find(p => p.id === id)
     if (!confirm(`delete ${found?.name}?`))
       return

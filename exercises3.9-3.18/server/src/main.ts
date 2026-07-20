@@ -43,9 +43,14 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    state.persons = state.persons.filter(item => item.id !== req.params.id)
+    const id = req.params.id
+    mongoService.deletePerson(id).then((result) => {
+        if (!result) return res.status(404).end()
+            
+        res.status(204).end()
+    })
 
-    res.status(204).end()
+    
 })
 
 app.post('/api/persons', (req, res) => {
