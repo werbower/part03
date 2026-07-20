@@ -39,7 +39,9 @@ export const mongoService = {
             console.log('deleted ', result)
             return result
         })
-    }
+    },
+    getPerson: (id: string)=> Person.findById(id),
+    countPerson: ()=> Person.countDocuments({})
 
 
 }

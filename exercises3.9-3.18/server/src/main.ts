@@ -32,12 +32,12 @@ app.get('/api/persons', (req, res, next) => {
     }).catch(e => next(e))
 })
 
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', async (req, res) => {
     const id = req.params.id
-    const person = state.persons.find(item => item.id === id)
+    const person = await mongoService.getPerson(id)
     if (!person)
         return res.status(404).end()
-    res.send(person)
+    res.send({id : person._id, name: person.name, number: person.number})
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
@@ -81,6 +81,11 @@ app.put('/api/persons/:id', (req, res, next) => {
         next(e)
     })
 
+})
+
+app.get('/info', async (req, res) => {
+    res.send(`<div>Phone book has info for ${await mongoService.countPerson()} people</div><br>
+        <div>${(new Date()).toString()}</div>`)
 })
 
 
