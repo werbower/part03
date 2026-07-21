@@ -1,11 +1,12 @@
 {
-  "name": "exercises3.9-3.11",
+  "name": "exercises3.9-3.22",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"cd ./server && pnpm dev\" \"cd ./client && pnpm dev\" ",
     "build": "concurrently \"pnpm i && cd ./server && pnpm i && pnpm build\" \"cd ./client && pnpm i && pnpm build\" ",
+    "ibuild": "pnpm i && pnpm build",
     "start": "cd ./server && pnpm start"
   },
   "keywords": [],

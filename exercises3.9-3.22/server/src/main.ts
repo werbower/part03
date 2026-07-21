@@ -8,7 +8,7 @@ import { mongoService } from './mongo.js'
 const app = express()
 
 const clientPath = join(import.meta.dirname, '../client')
-console.log('client path', clientPath)
+
 app.use(express.static(clientPath))
 
 app.use(express.json())
