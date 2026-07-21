@@ -90,9 +90,9 @@ app.get('/info', async (req, res) => {
 
 
 const errHandler: ErrorRequestHandler = (err, req, res, next) => {
-    console.log('error ', err)
-    console.log('error ', JSON.stringify(err))
-
+    if (err.name === 'ValidationError') {
+        return res.status(400).json({message: err.message})
+    }
     res.status(500).end()
 }
 app.use(errHandler)

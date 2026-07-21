@@ -11,7 +11,7 @@ mongoose.connect(connString, { family: 4 })
 type TPerson = { _id?: string, name: string, number: string }
 
 const person = new mongoose.Schema<TPerson>({
-    name: {type: String, required: true, unique: true},
+    name: {type: String, required: true, unique: true, minLength: 3},
     number: {type: String, required: true, unique: true}
 })
 const Person = mongoose.model<TPerson>('Person', person)

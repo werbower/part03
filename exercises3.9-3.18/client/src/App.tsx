@@ -45,6 +45,10 @@ function App() {
         setNewName('')
         setPersons([...persons, newPerson])
         showNotif({ type: 'success', message: `Added ${name}` })
+      }).catch(e => {
+        if (e.status == 400 || e.status == 422) {
+          showNotif({ type: 'failure', message: e.response.data?.message || e.message})
+        }
       })
       return
     }
@@ -64,7 +68,7 @@ function App() {
     }
   }
 
-  const handlePersonDelete = (id:  string) => {
+  const handlePersonDelete = (id: string) => {
     const found = persons.find(p => p.id === id)
     if (!confirm(`delete ${found?.name}?`))
       return
