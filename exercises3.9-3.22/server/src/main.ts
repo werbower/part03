@@ -1,6 +1,6 @@
 
 import express, { ErrorRequestHandler } from 'express'
-import { Person, state } from './state.js'
+import { Person  } from './state.js'
 import morgan from 'morgan'
 import { join } from 'path'
 import { mongoService } from './mongo.js'
@@ -92,7 +92,7 @@ app.get('/info', async (req, res) => {
 })
 
 
-const errHandler: ErrorRequestHandler = (err, req, res, next) => {
+const errHandler: ErrorRequestHandler = (err, req, res, _) => {
     if (err.name === 'ValidationError') {
         return res.status(400).json({message: err.message})
     }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch --inspect src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "lint": "pnpm eslint ."
   },
   "keywords": [],
   "author": "",
@@ -20,12 +21,16 @@
   },
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tsconfig/node24": "^24.0.4",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.1.1",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
     "tsx": "^4.23.1",
-    "typescript": "^7.0.2"
+    "typescript": "6.0.2",
+    "typescript-eslint": "^8.64.0"
   },
   "dependencies": {
     "dotenv": "^17.4.2",

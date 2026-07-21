@@ -26,7 +26,7 @@ const persons = [
 
 const generateId = () => {
   const newId = '' + Math.round(Math.random() * 999999)
-  while (!!persons.find(item => item.id === newId)) return generateId()
+  while (persons.find(item => item.id === newId)) return generateId()
   return newId
 }
 
