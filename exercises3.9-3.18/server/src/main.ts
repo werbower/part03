@@ -78,6 +78,9 @@ app.put('/api/persons/:id', (req, res, next) => {
         if (!result) return res.status(404).end()
         res.status(200).json(result as Person)
     }).catch(e => {
+        if (e.code == 11000) {
+            return res.status(422).json({ message: `can't process payload` })
+        }
         next(e)
     })
 
